@@ -52,7 +52,7 @@ public class STrianglesFanRenderer extends AbsSPointRenderer {
         colorList.add(1f);
 
         boolean falg = false;
-        for (float alpha = 0f;alpha< Math.PI *2;alpha= (float) (alpha+Math.PI/6)){
+        for (float alpha = 0f;alpha< Math.PI *(2+1/8);alpha= (float) (alpha+Math.PI/8)){
             x = (float) (r*Math.cos(alpha));
             y = (float) (r*Math.sin(alpha));
             points.add(x);

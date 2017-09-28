@@ -18,7 +18,6 @@ import sen.com.renderer.AbsSPointRenderer;
  * Version: 1.0
  * On     : 2017/9/26 15:57
  * Des    : 画三角形组成椎体，同时也画底部，作为封闭
- *         这个在V4,基础上添加深度测试，ps 可是效果好像出乎意料
  */
 
 public class STrianglesFanRendererV4 extends AbsSPointRenderer {

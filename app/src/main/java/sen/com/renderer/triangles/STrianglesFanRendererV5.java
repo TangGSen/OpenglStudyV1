@@ -18,7 +18,8 @@ import sen.com.renderer.AbsSPointRenderer;
  * Version: 1.0
  * On     : 2017/9/26 15:57
  * Des    : 画三角形组成椎体，同时也画底部，作为封闭
- *         这个在V3 ,画底部时，颜色错开一个颜色
+ *         这个在V3 ,  这个在V4,基础上添加深度测试
+ *         gl.glClear(GL10.GL_COLOR_BUFFER_BIT|GL10. GL_DEPTH_BUFFER_BIT);
  */
 
 public class STrianglesFanRendererV5 extends AbsSPointRenderer {
@@ -105,7 +106,8 @@ public class STrianglesFanRendererV5 extends AbsSPointRenderer {
     public void onDrawFrame(GL10 gl) {
         Log.e("sensen","SPointRenderer->onDrawFrame"+Thread.currentThread().getName());
         long starTime = System.currentTimeMillis();
-        gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+        //
+        gl.glClear(GL10.GL_COLOR_BUFFER_BIT|GL10. GL_DEPTH_BUFFER_BIT);
         //设置绘图颜色
         gl.glColor4f(1f,1f,1f,1f);
 
