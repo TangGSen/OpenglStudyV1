@@ -20,6 +20,16 @@ public abstract class AbsSPointRenderer implements GLSurfaceView.Renderer{
     public float xroate;
     public float yroate;
     public float zroate;
+    //全局环境光
+    public float golbalRProgress;
+    public float golbalGProgress;
+    public float golbalBProgress;
+    //设置材料反射率和环境光反射率，相同值
+    public float meatilRProgress;
+    public float meatilGProgress;
+    public float meatilBProgress;
+
+    public boolean enableColorMaterial;
     private  ByteBuffer byteBuffer;
     private  List<Float> points;
     public float ritio;

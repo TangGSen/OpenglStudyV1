@@ -37,6 +37,7 @@ public class STrianglesFanRendererV5 extends AbsSPointRenderer {
         super.onSurfaceCreated(gl, config);
         //启动颜色缓冲区
         gl.glEnableClientState(GL10.GL_COLOR_ARRAY);
+        gl.glEnable(GL10.GL_DEPTH_TEST);
     }
 
     public STrianglesFanRendererV5(){

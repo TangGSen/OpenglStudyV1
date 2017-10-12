@@ -22,6 +22,15 @@ public class ByteBufferUtils {
         return byteBuffer;
     }
 
+    public static FloatBuffer arry2FloatBuffer(float[] arry) {
+        ByteBuffer byteBuffer = ByteBuffer.allocateDirect(arry.length * 4);
+        byteBuffer.order(ByteOrder.nativeOrder());
+        FloatBuffer buffer = byteBuffer.asFloatBuffer();
+        buffer.put(arry);
+        buffer.position(0);
+        return buffer;
+    }
+
     public static ByteBuffer list2Byte(List<Float> lines) {
         ByteBuffer byteBuffer = ByteBuffer.allocateDirect(lines.size()* 4);
         byteBuffer.order(ByteOrder.nativeOrder());
@@ -32,5 +41,16 @@ public class ByteBufferUtils {
         byteBuffer.position(0);
         return byteBuffer;
 
+    }
+
+    public static ByteBuffer arry2ByteBuffer(byte[] arr) {
+        /**
+         * 将浮点数组转换成字节缓冲区
+         */
+            ByteBuffer ibb = ByteBuffer.allocateDirect(arr.length);
+            ibb.order(ByteOrder.nativeOrder());
+            ibb.put(arr);
+            ibb.position(0);
+            return ibb ;
     }
 }
