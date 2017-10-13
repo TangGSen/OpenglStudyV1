@@ -3,7 +3,7 @@
 //
 
 #include "utils.h"
-#include "ground.h"
+#include "drawAnyS.h"
 /*void Ground::init() {
     Vertex vertex[1600]; //表示地形有1600个顶点
     for (int z= 0; z< 20; ++z) {
@@ -66,7 +66,7 @@ void Ground::init() {
 */
 
 
-void Ground::init() {
+void DrawAnyS::initData() {
     float startTime = getTime();
     vertexBuffer = new VertexBuffer;
     vertexBuffer->setSize(1600);
@@ -84,6 +84,11 @@ void Ground::init() {
             vertexBuffer->setNarmal(offset+2,0.0f,1.0f,0.0f);
             vertexBuffer->setNarmal(offset+3,0.0f,1.0f,0.0f);
 
+            vertexBuffer->setTexcoord(offset,0.0f,1.0f);
+            vertexBuffer->setTexcoord(offset+1,0.0f,1.0f);
+            vertexBuffer->setTexcoord(offset+2,0.0f,1.0f);
+            vertexBuffer->setTexcoord(offset+3,0.0f,1.0f);
+
             if((z%2)^(x%2)){
                 vertexBuffer->setColor(offset,0.3f,0.3f,0.3f,1.0f);
                 vertexBuffer->setColor(offset+1,0.3f,0.3f,0.3f,1.0f);
@@ -97,23 +102,29 @@ void Ground::init() {
             }
         }
     }
-    vbo = createBufferObj(GL_ARRAY_BUFFER, sizeof(Vertex)*vertexBuffer->mVertexCount ,GL_STATIC_DRAW,vertexBuffer->mVertexes);
+    //这个放在vertexbuffer 初始化
+  //  vbo = createBufferObj(GL_ARRAY_BUFFER, sizeof(Vertex)*vertexBuffer->mVertexCount ,GL_STATIC_DRAW,vertexBuffer->mVertexes);
     mShader = new SShader;
     mShader->init("Res/ground.vs", "Res/ground.fs");
+    mShader->setTexture("U_Texture","Res/test.bmp");
     float timeEnd = getTime();
     LOGE("Ground::init %f",timeEnd-startTime);
 }
 
-void Ground::draw(glm::mat4 &mViewMatrix,
+void DrawAnyS::draw(glm::mat4 &mViewMatrix,
                   glm::mat4 &mProjectionMatrix) {
     glEnable(GL_DEPTH_TEST);//启动深度测试
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    //vbo 放在vertex
+//    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    ////这里要注意,必须先设置vbo ,后shader 才能获取attribute，否则出错
+    vertexBuffer->bind();
     mShader->bind(glm::value_ptr(mModelMatrix), glm::value_ptr(mViewMatrix),
                   glm::value_ptr(mProjectionMatrix));
+
     //绘制400个正方形格子
     for (int i = 0; i < 400; i++) {
         glDrawArrays(GL_TRIANGLES, i * 4, 4);
     }
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    vertexBuffer->unBind();
     LOGE("Ground::draw");
 }

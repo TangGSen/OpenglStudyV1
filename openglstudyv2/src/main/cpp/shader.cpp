@@ -26,6 +26,7 @@ void SShader::init(const char *vsPath, const char *fsPath) {
     positionLocation = glGetAttribLocation(mProgram,"poistion");
     colorLocation = glGetAttribLocation(mProgram,"color");
     normalLocation = glGetAttribLocation(mProgram,"normal");
+    texcoordLocation= glGetAttribLocation(mProgram,"textcoord");
     projectionMatrixLocation = glGetUniformLocation(mProgram,"ProjectionMatrix");
     viewMatrixLocation = glGetUniformLocation(mProgram,"ViewMatrix");
     modelMatrixLocation = glGetUniformLocation(mProgram,"ModelMatrix");
@@ -37,6 +38,11 @@ void SShader::bind(float *M, float *V, float *P) {
     glUniformMatrix4fv(modelMatrixLocation,1,GL_FALSE,M);
     glUniformMatrix4fv(viewMatrixLocation,1,GL_FALSE,V);
     glUniformMatrix4fv(projectionMatrixLocation,1,GL_FALSE,P);
+
+    if (uniformTexture.mLocation!=-1){
+        glBindTexture(GL_TEXTURE_2D,uniformTexture.mTexture);
+        glUniform1i(uniformTexture.mLocation,0);
+    }
 
     //启动
     glEnableVertexAttribArray(positionLocation);
@@ -53,5 +59,18 @@ void SShader::bind(float *M, float *V, float *P) {
     glEnableVertexAttribArray(normalLocation);
     glVertexAttribPointer(normalLocation, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex),
                           (const void *) (sizeof(float) * 12));
+
+}
+
+//设置贴图
+void SShader::setTexture(const char* name , const char* imagePath){
+    if (uniformTexture.mLocation ==-1){
+        uniformTexture.mLocation  = glGetUniformLocation(mProgram,name);
+        if (uniformTexture.mLocation !=-1){
+            LOGE("setTexture yes");
+            uniformTexture.mTexture = crateTexture2dFromBmp(imagePath);
+        }
+
+    }
 
 }

@@ -4,7 +4,8 @@
 
 #include "drawAnyS.h"
 #include "scence.h"
-#include "sen_test.h"
+
+DrawAnyS *ground;
 glm::mat4 mViewMatrix;
 glm::mat4 mProjectionMatrix;
 glm::mat4 mModelMatrix;
@@ -12,7 +13,8 @@ glm::mat4 mModelMatrix;
 VertexBuffer *vertexBuffer;
 SShader *mShader;
 void init() {
-    testCMap();
+//    ground=new DrawAnyS;
+//    ground->initData();
     vertexBuffer = new VertexBuffer;
     vertexBuffer->setSize(3);
 
@@ -31,7 +33,7 @@ void init() {
     vertexBuffer->setTexcoord(2,0.0f,1.0f);
     mShader = new SShader;
     mShader->init("Res/ground.vs", "Res/ground.fs");
-    mShader->setTexture("U_Texture","Res/testv2.bmp");
+    mShader->setTexture("U_Texture","Res/test.bmp");
 
 
 }
@@ -54,7 +56,9 @@ void draw() {
     glEnable(GL_DEPTH_TEST);//启动深度测试
     glClearColor(0.6f,0.0f,0.6f,1.0f);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-
+//    ground->draw(mViewMatrix,mProjectionMatrix);
+   //良好习惯，当绘制完毕后，将程序置为0 号程序
+//    glUseProgram(0);
     ////这里要注意,必须先设置vbo ,后shader 才能获取attribute，否则出错
     vertexBuffer->bind();
     mShader->bind(glm::value_ptr(mModelMatrix), glm::value_ptr(mViewMatrix),
@@ -62,8 +66,6 @@ void draw() {
 
     glDrawArrays(GL_TRIANGLES, 0, 3);
     vertexBuffer->unBind();
-    //良好习惯，当绘制完毕后，将程序置为0 号程序
-    glUseProgram(0);
     float timeEnd = getTime();
     LOGE("draw usetime %f",timeEnd-time);
 }
