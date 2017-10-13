@@ -5,16 +5,18 @@
 
 #include "ggl.h"
 #include "vertexbuffer.h"
-
+#include "shader.h"
 class Ground {
+public:
     GLuint vbo;
-    GLuint mProgram;
+    SShader *mShader;
     VertexBuffer *vertexBuffer;
-    GLint positionLocation,colorLocation, normalLocation ;
-    GLint ProjectionMatrixLocation,ModelMatrixLocation, ViewMatrixLocation ;
+    glm::mat4 mModelMatrix;
+    glm::mat4 mViewMatrix;
+    glm::mat4 mProjectionMatrix;
 public:
     void init();//初始化数据
-
+    void draw();
 };
 
 

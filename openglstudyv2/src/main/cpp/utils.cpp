@@ -47,7 +47,7 @@ GLuint createProgram(GLuint vsShader, GLuint fsShader) {
 }
 
 //获取毫秒级的时间，理论上来说把秒级的sec*1000+微秒级的usec/1000
-float getFrameTime() {
+float getTime() {
     static unsigned long long lastTime = 0, curentTime = 0;
     timeval current;
     gettimeofday(&current, nullptr);
@@ -68,9 +68,8 @@ unsigned char *decodeBmp(unsigned char *bmpFileData, int &width, int &height) {
         height = *(int *) (bmpFileData + 22);
         //像素数据的起始位置
         unsigned char *pixelData = bmpFileData + pixelDataOffset;
-        int i = 0;
         //bgr  需要转成rgb
-        for (i; i < width * height * 3; i += 3) {
+        for (int i =0; i < width * height * 3; i += 3) {
             unsigned char temp = pixelData[i];
             pixelData[i] = pixelData[i + 2];
             pixelData[i + 2] = temp;
@@ -160,5 +159,14 @@ GLuint crateTexture2dFromBmp(const char* bmpPath){
 //    delete pixelData;
     LOGE("crateTexture2dFromBmp yes");
     return textId;
+}
+
+GLuint createBufferObj(GLenum bufferType,GLsizeiptr size,GLenum usage, void *data){
+    GLuint  obj;
+    glGenBuffers(1,&obj);
+    glBindBuffer(bufferType,obj);
+    glBufferData(bufferType,size,data,usage);
+    glBindBuffer(bufferType,0);
+    return obj;
 }
 

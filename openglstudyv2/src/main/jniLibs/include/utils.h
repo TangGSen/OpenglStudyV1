@@ -18,8 +18,8 @@ GLuint complieShader(GLenum shaderType,const char * shaderCode);
 //这个Program 是在显卡上跑的，而不是在cpu 跑的
 GLuint createProgram (GLuint vsShader,GLuint fsShader);
 
-//获取每帧的时间
-float getFrameTime();
+//获取每帧的时间,也可以用测试在代码的执行时间
+float getTime();
 
 //解码bmp 图片,返回时bmp 像素的起始地址
 unsigned char* decodeBmp(unsigned char* bmpFileData,int &width, int & height);
@@ -31,14 +31,7 @@ GLuint createTexture2D(unsigned char* piexlData,int width,int height,GLenum type
 GLuint crateTexture2dFromBmp(const char* bmpPath);
 
 //封装
-GLuint createBufferObj(GLenum bufferType,GLsizeiptr size,GLenum usage, void *data){
-    GLuint  obj;
-    glGenBuffers(1,&obj);
-    glBindBuffer(bufferType,obj);
-    glBufferData(bufferType,size,data,usage);
-    glBindBuffer(bufferType,0);
-    return obj;
-}
+GLuint createBufferObj(GLenum bufferType,GLsizeiptr size,GLenum usage, void *data);
 
 
 
