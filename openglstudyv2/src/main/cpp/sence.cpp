@@ -4,11 +4,11 @@
 
 #include "ground.h"
 #include "scence.h"
-#include "utils.h"
 
 
 Ground *ground;
-GLuint texture;
+glm::mat4 mViewMatrix;
+glm::mat4 mProjectionMatrix;
 void init() {
     ground=new Ground;
     ground->init();
@@ -22,7 +22,7 @@ void setViewPortSize(float width, float height) {
      * 3.最近看到的距离
      * 4.最远看到的距离
      */
-    ground->mProjectionMatrix = glm::perspective(60.0f,width/height,0.1f,1000.0f);
+    mProjectionMatrix= glm::perspective(60.0f,width/height,0.1f,1000.0f);
     //其他两个没设置就是单位矩阵
 }
 
@@ -33,9 +33,7 @@ void draw() {
 
     glClearColor(0.6f,0.0f,0.6f,1.0f);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-    ground->draw();
-
-
+    ground->draw(mViewMatrix,mProjectionMatrix);
    //良好习惯，当绘制完毕后，将程序置为0 号程序
     glUseProgram(0);
     float timeEnd = getTime();

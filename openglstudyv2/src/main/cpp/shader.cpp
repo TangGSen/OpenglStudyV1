@@ -54,5 +54,4 @@ void SShader::bind(float *M, float *V, float *P) {
     glVertexAttribPointer(normalLocation, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex),
                           (const void *) (sizeof(float) * 12));
 
-
 }

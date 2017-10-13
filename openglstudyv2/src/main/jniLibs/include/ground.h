@@ -12,11 +12,10 @@ public:
     SShader *mShader;
     VertexBuffer *vertexBuffer;
     glm::mat4 mModelMatrix;
-    glm::mat4 mViewMatrix;
-    glm::mat4 mProjectionMatrix;
+
 public:
     void init();//初始化数据
-    void draw();
+    void draw(glm::mat4 &mViewMatrix, glm::mat4 &mProjectionMatrix);
 };
 
 

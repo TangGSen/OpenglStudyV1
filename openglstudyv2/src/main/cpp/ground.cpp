@@ -104,7 +104,8 @@ void Ground::init() {
     LOGE("Ground::init %f",timeEnd-startTime);
 }
 
-void Ground::draw() {
+void Ground::draw(glm::mat4 &mViewMatrix,
+                  glm::mat4 &mProjectionMatrix) {
     glEnable(GL_DEPTH_TEST);//启动深度测试
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     mShader->bind(glm::value_ptr(mModelMatrix), glm::value_ptr(mViewMatrix),
