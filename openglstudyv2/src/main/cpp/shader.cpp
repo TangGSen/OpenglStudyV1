@@ -38,11 +38,19 @@ void SShader::bind(float *M, float *V, float *P) {
     glUniformMatrix4fv(modelMatrixLocation,1,GL_FALSE,M);
     glUniformMatrix4fv(viewMatrixLocation,1,GL_FALSE,V);
     glUniformMatrix4fv(projectionMatrixLocation,1,GL_FALSE,P);
-
-    if (uniformTexture.mLocation!=-1){
+    ////多重贴图的做法
+    int index = 0;
+    for(auto iterators = uniformTextures.begin(); iterators !=uniformTextures.end();++iterators){
+        //需要激活
+        glActiveTexture(GL_TEXTURE0+index);
+        glBindTexture(GL_TEXTURE_2D,iterators->second->mTexture);
+        glUniform1i(iterators->second->mLocation,index++);
+    }
+   /* 单个贴图做法
+    * if (uniformTexture.mLocation!=-1){
         glBindTexture(GL_TEXTURE_2D,uniformTexture.mTexture);
         glUniform1i(uniformTexture.mLocation,0);
-    }
+    }*/
 
     //启动
     glEnableVertexAttribArray(positionLocation);
@@ -62,15 +70,35 @@ void SShader::bind(float *M, float *V, float *P) {
 
 }
 
+//单个的做法设置贴图
+//void SShader::setTexture(const char* name , const char* imagePath){
+//    if (uniformTexture.mLocation ==-1){
+//        uniformTexture.mLocation  = glGetUniformLocation(mProgram,name);
+//        if (uniformTexture.mLocation !=-1){
+//            LOGE("setTexture yes");
+//            uniformTexture.mTexture = crateTexture2dFromBmp(imagePath);
+//        }
+//
+//    }
+//
+//}
 //设置贴图
 void SShader::setTexture(const char* name , const char* imagePath){
-    if (uniformTexture.mLocation ==-1){
-        uniformTexture.mLocation  = glGetUniformLocation(mProgram,name);
-        if (uniformTexture.mLocation !=-1){
+    auto iterators = uniformTextures.find(name);
+    if (iterators ==uniformTextures.end()){
+        //找不到就创建
+        GLuint  location  = glGetUniformLocation(mProgram,name);
+        if (location !=-1){
+            UniformTexture *uniformTexture =new UniformTexture;
             LOGE("setTexture yes");
-            uniformTexture.mTexture = crateTexture2dFromBmp(imagePath);
+            uniformTexture->mTexture = crateTexture2dFromBmp(imagePath);
+            uniformTexture->mLocation = location;
+            uniformTextures.insert(std::pair<std::string,UniformTexture *>(name,uniformTexture));
         }
-
+    } else{
+        //重新赋值
+        glDeleteTextures(1, &iterators->second->mTexture);
+        iterators->second->mTexture = crateTexture2dFromBmp(imagePath);
     }
 
 }

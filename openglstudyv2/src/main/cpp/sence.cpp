@@ -12,7 +12,7 @@ glm::mat4 mModelMatrix;
 VertexBuffer *vertexBuffer;
 SShader *mShader;
 void init() {
-    testCMap();
+//    testCMap();
     vertexBuffer = new VertexBuffer;
     vertexBuffer->setSize(3);
 
@@ -32,6 +32,8 @@ void init() {
     mShader = new SShader;
     mShader->init("Res/ground.vs", "Res/ground.fs");
     mShader->setTexture("U_Texture","Res/testv2.bmp");
+    mShader->setTexture("U_Texture2","Res/test.bmp");
+
 
 
 }
