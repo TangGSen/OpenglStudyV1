@@ -52,6 +52,10 @@ void SShader::bind(float *M, float *V, float *P) {
         glUniform1i(uniformTexture.mLocation,0);
     }*/
 
+    for (auto iterators = uniformVec4s.begin();iterators!=uniformVec4s.end();++iterators) {
+        glUniform4fv(iterators->second->mLocation,1,iterators->second->data);
+    }
+
     //启动
     glEnableVertexAttribArray(positionLocation);
     glVertexAttribPointer(positionLocation,4,GL_FLOAT,GL_FALSE, sizeof(Vertex),0);
@@ -102,3 +106,31 @@ void SShader::setTexture(const char* name , const char* imagePath){
     }
 
 }
+
+//设置Uniformvec4
+void SShader::setUiformVec4(const char *name, float x, float y, float z, float w) {
+    auto iterators = uniformVec4s.find(name);
+    if (iterators ==uniformVec4s.end()){
+        //找不到就创建
+        GLuint  location  = glGetUniformLocation(mProgram,name);
+        if (location !=-1){
+            UniformVec4 *uniformVec4 =new UniformVec4;
+            uniformVec4->mLocation = location;
+            uniformVec4->data[0] = x;
+            uniformVec4->data[1] = y;
+            uniformVec4->data[2] = z;
+            uniformVec4->data[3] = w;
+            uniformVec4s.insert(std::pair<std::string,UniformVec4 *>(name,uniformVec4));
+        }
+    } else{
+        //重新赋值
+        iterators->second->data[0] = x;
+        iterators->second->data[1] = y;
+        iterators->second->data[2] = z;
+        iterators->second->data[3] = w;
+    }
+
+}
+
+
+
