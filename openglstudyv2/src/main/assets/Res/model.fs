@@ -43,6 +43,13 @@ void main(){
        vec3 viewDir = normalize(U_CameraPos.xyz- V_WorldPos.xyz);
        specularColor = U_LigthSpecular*U_SpecularMaterial*pow(max(0.0,dot(viewDir,relectDir)),U_LightOpt.x);
     }
-    color = ambientColor+diffuseColor+specularColor;
+
+    //设置光照和贴图混合
+    if(U_LightOpt.w==1.0){
+        color = ambientColor+diffuseColor*texture2D(U_Texture,V_textcoord.xy)+specularColor;
+    }else{
+        color = ambientColor+diffuseColor*texture2D(U_Texture,V_textcoord.xy);
+    }
+
     gl_FragColor =color;
 }

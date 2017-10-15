@@ -133,6 +133,10 @@ void Model::initModel(const char *path) {
     mShader = new SShader;
     mShader->init("Res/model.vs", "Res/model.fs");
     //设置光的环境光分量,白光
+    setAmbientMaterial(0.1f, 0.1f, 0.1f, 1.0f);
+    setSpecularMaterial(1.0f, 1.0f, 1.0f, 1.0f);
+    setDiffusseMaterial(0.6f, 0.6f, 0.6f, 1.0f);
+
     mShader->setUiformVec4("U_LightAmbient", 1.0f, 1.0f, 1.0f, 1.0f);
     //设置模型对环境光的反射系数分量,通过接口setAmbientMaterial 来设置
     //mShader->setUiformVec4("U_AmbientMaterial",0.1f,0.1f,0.1f,1.0f);
@@ -144,11 +148,9 @@ void Model::initModel(const char *path) {
     mShader->setUiformVec4("U_LigthSpecular", 1.0f, 1.0f, 1.0f, 1.0f);
     //   mShader->setUiformVec4("U_SpecularMaterial",1.0f,1.0f,1.0f,1.0f);
     mShader->setUiformVec4("U_CameraPos", 1.0f, 1.0f, 1.0f, 1.0f);
-    mShader->setUiformVec4("U_LightOpt", 64.0f, 0.0f, 0.0f, 0.0f);
+    mShader->setUiformVec4("U_LightOpt", 32.0f, 0.0f, 0.0f, 0.0f);
 
-    setAmbientMaterial(0.1f, 0.1f, 0.1f, 1.0f);
-    setSpecularMaterial(1.0f, 1.0f, 1.0f, 1.0f);
-    setDiffusseMaterial(0.6f, 0.6f, 0.6f, 1.0f);
+
 
 
 }
@@ -181,5 +183,7 @@ void Model::setDiffusseMaterial(float r, float g, float b, float a) {
 void Model::setSpecularMaterial(float r, float g, float b, float a) {
     mShader->setUiformVec4("U_SpecularMaterial",1.0f,0.0f,1.0f,1.0f);
 }
-
+void Model::setTexture(const char *imagePath){
+    mShader->setTexture("U_Texture",imagePath);
+};
 

@@ -13,6 +13,7 @@ Model * model;
 void init() {
     model = new Model;
     model->initModel("Res/Sphere.obj");
+    model->setTexture("Res/earth.bmp");
     model->setModelPosition(0.0f,0.0f,-5.0f);
 
 }

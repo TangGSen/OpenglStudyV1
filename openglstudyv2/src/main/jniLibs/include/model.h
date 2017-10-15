@@ -20,6 +20,7 @@ public:
     void setAmbientMaterial(float r,float g,float b,float a);
     void setDiffusseMaterial(float r,float g,float b,float a);
     void setSpecularMaterial(float r,float g,float b,float a);
+    void setTexture(const char *imagePath);
 };
 
 
