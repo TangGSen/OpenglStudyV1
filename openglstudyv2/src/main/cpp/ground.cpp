@@ -106,7 +106,11 @@ void DrawAnyS::initData() {
   //  vbo = createBufferObj(GL_ARRAY_BUFFER, sizeof(Vertex)*vertexBuffer->mVertexCount ,GL_STATIC_DRAW,vertexBuffer->mVertexes);
     mShader = new SShader;
     mShader->init("Res/ground.vs", "Res/ground.fs");
-    mShader->setTexture("U_Texture","Res/test.bmp");
+//    mShader->setTexture("U_Texture","Res/test.bmp");
+    mShader->setUiformVec4("U_LightPos",0.0f,0.0f,1.0f,1.0f);
+    mShader->setUiformVec4("U_LightAmbient",1.0f,1.0f,1.0f,1.0f);
+    mShader->setUiformVec4("U_AmbientMaterial",0.1f,0.1f,0.1f,1.0f);
+    mShader->setUiformVec4("U_DiffuseMaterial",0.6f,0.6f,0.6f,1.0f);
     float timeEnd = getTime();
     LOGE("Ground::init %f",timeEnd-startTime);
 }
@@ -123,7 +127,7 @@ void DrawAnyS::draw(glm::mat4 &mViewMatrix,
 
     //绘制400个正方形格子
     for (int i = 0; i < 400; i++) {
-        glDrawArrays(GL_TRIANGLES, i * 4, 4);
+        glDrawArrays(GL_TRIANGLE_STRIP, i * 4, 4);
     }
     vertexBuffer->unBind();
     LOGE("Ground::draw");

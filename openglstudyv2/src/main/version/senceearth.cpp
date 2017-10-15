@@ -5,15 +5,16 @@
 #include "drawAnyS.h"
 #include "scence.h"
 #include "sen_test.h"
-#include "drawAnyS.h"
+#include "model.h"
 glm::mat4 mViewMatrix;
 glm::mat4 mProjectionMatrix;
 glm::mat4 mModelMatrix;
-DrawAnyS * ground;
+Model * model;
 void init() {
-    ground = new DrawAnyS;
-    ground->initData();
-
+    model = new Model;
+    model->initModel("Res/Sphere.obj");
+    model->setTexture("Res/earth.bmp");
+    model->setModelPosition(0.0f,0.0f,-5.0f);
 
 }
 
@@ -34,7 +35,7 @@ void draw() {
     float time = getTime();
     glClearColor(0.6f,0.0f,0.6f,1.0f);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-    ground->draw(mViewMatrix,mProjectionMatrix);
+    model->drawModel(mViewMatrix,mProjectionMatrix);
     //良好习惯，当绘制完毕后，将程序置为0 号程序
     glUseProgram(0);
     float timeEnd = getTime();
