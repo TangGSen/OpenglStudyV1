@@ -2,7 +2,6 @@
 // Created by Administrator on 2017/10/11.
 //
 
-#include <skybox.h>
 #include "drawAnyS.h"
 #include "scence.h"
 #include "sen_test.h"
@@ -10,10 +9,10 @@
 glm::mat4 mViewMatrix;
 glm::mat4 mProjectionMatrix;
 glm::mat4 mModelMatrix;
-SkyBox * skyBox;
+DrawAnyS * ground;
 void init() {
-    skyBox = new SkyBox;
-    skyBox->init("Res/");
+    ground = new DrawAnyS;
+    ground->initData();
 
 
 }
@@ -35,7 +34,7 @@ void draw() {
     float time = getTime();
     glClearColor(0.6f,0.0f,0.6f,1.0f);
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-    skyBox->draw(mViewMatrix,mProjectionMatrix);
+    ground->draw(mViewMatrix,mProjectionMatrix);
     //良好习惯，当绘制完毕后，将程序置为0 号程序
     glUseProgram(0);
     float timeEnd = getTime();
