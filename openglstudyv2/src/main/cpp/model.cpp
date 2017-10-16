@@ -155,8 +155,10 @@ void Model::initModel(const char *path) {
 
 }
 
-void Model::drawModel(glm::mat4 &mViewMatrix, glm::mat4 &mProjectionMatrix) {
+void Model::drawModel(glm::mat4 &mViewMatrix, glm::mat4 &mProjectionMatrix, float x, float y,float z) {
     glEnable(GL_DEPTH_TEST);
+    //由于光照需要摄像机的位置
+    mShader->setUiformVec4("U_CameraPos",x,y,z,1.0);
     vertexBuffer->bind();
     glm::mat4 it = glm::inverseTranspose(mModelMatrix);
     mShader->bind(glm::value_ptr(mModelMatrix), glm::value_ptr(mViewMatrix),
@@ -183,7 +185,7 @@ void Model::setDiffusseMaterial(float r, float g, float b, float a) {
 void Model::setSpecularMaterial(float r, float g, float b, float a) {
     mShader->setUiformVec4("U_SpecularMaterial",1.0f,0.0f,1.0f,1.0f);
 }
-void Model::setTexture(const char *imagePath){
+void Model::setModelTexture(const char *imagePath){
     mShader->setTexture("U_Texture",imagePath);
 };
 

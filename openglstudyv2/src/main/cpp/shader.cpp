@@ -133,4 +133,25 @@ void SShader::setUiformVec4(const char *name, float x, float y, float z, float w
 }
 
 
+void SShader::setTexture(char * name,GLuint texture){
+    auto iterators = uniformTextures.find(name);
+    if (iterators ==uniformTextures.end()){
+        //找不到就创建
+        GLuint  location  = glGetUniformLocation(mProgram,name);
+        if (location !=-1){
+            UniformTexture *uniformTexture =new UniformTexture;
+            LOGE("setTexture yes");
+            uniformTexture->mTexture = texture;
+            uniformTexture->mLocation = location;
+            uniformTextures.insert(std::pair<std::string,UniformTexture *>(name,uniformTexture));
+        }
+    } else{
+        //重新赋值
+        glDeleteTextures(1, &iterators->second->mTexture);
+        iterators->second->mTexture = texture;
+    }
+
+}
+
+
 

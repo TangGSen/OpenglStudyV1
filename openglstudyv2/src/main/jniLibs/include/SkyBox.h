@@ -19,8 +19,8 @@ public :
     void initRight(const char*imageDir);
     void initTop(const char*imageDir);
     void initBottom(const char*imageDir);
-
-    void draw(glm::mat4 &ViewMatrix,glm::mat4 &ProjctionMatrix);
+    //x y z 表示当前摄像机的位置,让他永远套在摄像机的头上
+    void draw(glm::mat4 &ViewMatrix,glm::mat4 &ProjctionMatrix, float x, float y, float z);
 };
 
 

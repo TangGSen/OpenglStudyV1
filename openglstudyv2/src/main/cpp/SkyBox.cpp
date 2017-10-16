@@ -129,9 +129,11 @@ void SkyBox::initBottom(const char*imageDir){
     vertexBuffer[5].setTexcoord(3,1.0f,1.0f);
 };
 
-void SkyBox::draw(glm::mat4 &ViewMatrix, glm::mat4 &ProjctionMatrix) {
+void SkyBox::draw(glm::mat4 &ViewMatrix, glm::mat4 &ProjctionMatrix, float x, float y, float z) {
     //需要禁用深度测试
     glDisable(GL_DEPTH_TEST);
+    //这样确保，天空盒子是跟摄像机跑的
+    mModelMatrix = glm::translate(x,y,z);
     for (int i = 0; i < 6; ++i) {
         vertexBuffer[i].bind();
         sShader[i].bind(glm::value_ptr(mModelMatrix),glm::value_ptr(ViewMatrix),glm::value_ptr(ProjctionMatrix));

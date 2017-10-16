@@ -2,6 +2,7 @@
 // Created by Administrator on 2017/10/12.
 //
 
+#include <model.h>
 #include "utils.h"
 #include "drawAnyS.h"
 /*void Ground::init() {
@@ -109,6 +110,8 @@ void DrawAnyS::initData() {
 //    mShader->setTexture("U_Texture","Res/test.bmp");
     mShader->setUiformVec4("U_LightPos",0.0f,0.0f,1.0f,1.0f);
     mShader->setUiformVec4("U_LightAmbient",1.0f,1.0f,1.0f,1.0f);
+    mShader->setUiformVec4("U_LightDiffuse",.0f,1.0f,1.0f,1.0f);
+    mShader->setUiformVec4("U_LightOpt",32.0f,0.0f,0.0f,1.0f);
     mShader->setUiformVec4("U_AmbientMaterial",0.1f,0.1f,0.1f,1.0f);
     mShader->setUiformVec4("U_DiffuseMaterial",0.6f,0.6f,0.6f,1.0f);
     float timeEnd = getTime();
@@ -132,3 +135,4 @@ void DrawAnyS::draw(glm::mat4 &mViewMatrix,
     vertexBuffer->unBind();
     LOGE("Ground::draw");
 }
+

@@ -15,12 +15,12 @@ public:
     SShader *mShader;
     glm::mat4 mModelMatrix;
     void initModel(const char *path);
-    void drawModel(glm::mat4 &mViewMatrix, glm::mat4 &mProjectionMatrix);
+    void drawModel(glm::mat4 &mViewMatrix, glm::mat4 &mProjectionMatrix,float x, float y,float z);
     void setModelPosition(float x,float y, float z);
     void setAmbientMaterial(float r,float g,float b,float a);
     void setDiffusseMaterial(float r,float g,float b,float a);
     void setSpecularMaterial(float r,float g,float b,float a);
-    void setTexture(const char *imagePath);
+    void setModelTexture(const char *imagePath);
 };
 
 

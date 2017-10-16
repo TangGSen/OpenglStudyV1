@@ -33,6 +33,7 @@ GLuint crateTexture2dFromBmp(const char* bmpPath);
 //封装
 GLuint createBufferObj(GLenum bufferType,GLsizeiptr size,GLenum usage, void *data);
 
+GLuint createProcedureTexture(int size);
 
 
 
