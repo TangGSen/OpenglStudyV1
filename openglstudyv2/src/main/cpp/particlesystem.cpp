@@ -14,7 +14,7 @@ void ParticleSystem::init(float x,float y,float z){
     mShader->setTexture("U_Texture",createProcedureTexture(128));
 }
 
-void ParticleSystem::draw(glm::mat4 &viewMatrix, glm::mat4 &projectionMatrix) {
+void ParticleSystem::draw(glm::mat4 viewMatrix, glm::mat4 projectionMatrix) {
     //不要产生深度测试，因为这里的粒子需要透明的，当然有时需要不透明的，那就启用深度测试吧
     glDisable(GL_DEPTH_TEST);
     //http://www.cppblog.com/wc250en007/archive/2012/07/18/184088.html
