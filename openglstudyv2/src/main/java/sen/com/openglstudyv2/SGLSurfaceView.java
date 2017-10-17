@@ -23,6 +23,6 @@ public class SGLSurfaceView extends GLSurfaceView {
         setEGLContextClientVersion(2);
         sRenderer = new SRenderer();
         setRenderer(sRenderer);
-        setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+//        setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
     }
 }

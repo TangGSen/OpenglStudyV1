@@ -36,8 +36,8 @@ void init() {
     oxHead->mModelMatrix =glm::translate(-5.0f,0.0f,10.0f)*glm::scale(0.2f,0.2f,0.2f);
 //    oxHead->mModelMatrix =glm::scale(0.05f,0.05f,0.05f);
     particleSystem = new ParticleSystem;
-    particleSystem->init(0.0f,2.0f,0.0f);
-//    particleSystem->mModelMatrix =glm::translate(-1.0f,0.0f,1.0f);
+    particleSystem->init(0.0f,0.0f,0.0f,180);
+    particleSystem->mModelMatrix =glm::translate(-1.0f,0.0f,1.0f);
 
 
 }
@@ -61,13 +61,14 @@ void draw() {
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     skyBox->draw(mViewMatrix,mProjectionMatrix,carmeaPos.x,carmeaPos.y,carmeaPos.z);
     ground->draw(mViewMatrix,mProjectionMatrix);
-    particleSystem->draw(mViewMatrix, mProjectionMatrix);
     model->drawModel(mViewMatrix,mProjectionMatrix,carmeaPos.x,carmeaPos.y,carmeaPos.z);
+    particleSystem->draw(mViewMatrix, mProjectionMatrix);
+    particleSystem->updataFrame(time);
+
 
 //    oxHead->drawModel(mViewMatrix,mProjectionMatrix,carmeaPos.x,carmeaPos.y,carmeaPos.z);
 
     //良好习惯，当绘制完毕后，将程序置为0 号程序
     glUseProgram(0);
-    float timeEnd = getTime();
-    LOGE("draw usetime %f",timeEnd-time);
+    LOGE("draw usetime %f",time);
 }
