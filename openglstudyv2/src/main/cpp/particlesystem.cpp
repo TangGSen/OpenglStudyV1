@@ -9,7 +9,8 @@ void ParticleSystem::init(float x,float y,float z,int count){
     vertexBuffer = new VertexBuffer;
     vertexBuffer->setSize(count);
     for (int i = 0; i < count; ++i) {
-        vertexBuffer->setPosition(i,2.0f*cosf(float(i)*8.0f*3.14f/180.0f)+0.5f*i,0.0f,2.0f*sinf(float(i)*8.0f*3.14f/180.0f));
+      //  vertexBuffer->setPosition(i,2.0f*cosf(float(i)*8.0f*3.14f/180.0f)+0.5f*i,0.0f,2.0f*sinf(float(i)*8.0f*3.14f/180.0f));
+        vertexBuffer->setPosition(i,0.01f*i,0.0f,0.02f*i);
         vertexBuffer->setColor(i,0.1f,0.4f,0.6f);
     }
 
@@ -36,8 +37,15 @@ void ParticleSystem::updataFrame(float deltaTime) {
     angle +=deltaTime *10.0f;
     mModelMatrix =glm::rotate(angle,0.0f,1.0f,0.0f);
     //然后让前90个向上的偏移
-    for (int i = 0; i < vertexBuffer->mVertexCount; ++i) {
+    for (int i = 0; i < vertexBuffer->mVertexCount/2; ++i) {
         Vertex &vertex = vertexBuffer->get(i);
-        vertex.normal[0] = 0.1f*i;
+//        if (i>90){
+//            vertex.normal[1] = 0.05f*i+i*deltaTime;
+//        } else{
+            vertex.normal[0] = 0.2f*i;
+
+//        }
+
+
     }
 }

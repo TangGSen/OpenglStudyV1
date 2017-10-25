@@ -1,16 +1,21 @@
 package sen.com.openglstudyv2;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.util.Log;
 import android.view.Surface;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 
 public class CameraV1 {
@@ -19,16 +24,22 @@ public class CameraV1 {
     private Camera mCamera;
     private int mWidth;
     private int mHeigth;
-
+    String TAG = "sggllog";
     private int screen;
     private final static int SCREEN_PORTRAIT = 0;
     private final static int SCREEN_LANDSCAPE_LEFT = 90;
     private final static int SCREEN_LANDSCAPE_RIGHT = 270;
+    private boolean takePicture;
+    private String rootPicPath;
 
     public CameraV1(Activity activity,int width,int heigth) {
         mActivity = activity;
         this.mWidth = width;
         this.mHeigth = heigth;
+    }
+
+    public void setTakePicturePath(String path){
+        this.rootPicPath = path;
     }
 
     public boolean openCamera(int screenWidth, int screenHeight, int cameraId) {
@@ -38,31 +49,39 @@ public class CameraV1 {
             Camera.Parameters parameters = mCamera.getParameters();
             parameters.set("orientation", "portrait");
             parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+            setPreviewOrientation(parameters);
             setPreviewSize( parameters);
-            setCameraDisplayOrientation(mActivity, mCameraId, mCamera);
+            setPictureSize(parameters);
             mCamera.setParameters(parameters);
-            setCameraDisplayOrientation(mActivity,mCameraId,  mCamera);
         } catch (Exception e) {
+            Log.e(TAG,e.getMessage());
             e.printStackTrace();
             return false;
         }
         return true;
     }
 
-    private void setPreviewSize(Camera.Parameters parameters) {
-        List<Integer> supportedPreviewFormats = parameters.getSupportedPreviewFormats();
-        for (Integer integer : supportedPreviewFormats) {
-            System.out.println("支持:" + integer);
+    private void setPictureSize(Camera.Parameters parameters) {
+        List<Camera.Size> supportedPictureSize = parameters.getSupportedPictureSizes();
+        Iterator<Camera.Size> iterator = supportedPictureSize.iterator();
+        parameters.setPictureSize(supportedPictureSize.get(0).width,supportedPictureSize.get(0).height);
+        while (iterator.hasNext()) {
+            Camera.Size next = iterator.next();
+            Log.e(TAG, "PictureSize支持 " + next.width + "x" + next.height);
+
         }
+    }
+
+    private void setPreviewSize(Camera.Parameters parameters) {
         List<Camera.Size> supportedPreviewSizes = parameters.getSupportedPreviewSizes();
         Camera.Size size = supportedPreviewSizes.get(0);
-        Log.d(TAG, "支持 " + size.width + "x" + size.height);
+        Log.e(TAG, "支持 " + size.width + "x" + size.height);
         int m = Math.abs(size.height * size.width - mHeigth * mWidth);
         supportedPreviewSizes.remove(0);
         Iterator<Camera.Size> iterator = supportedPreviewSizes.iterator();
         while (iterator.hasNext()) {
             Camera.Size next = iterator.next();
-            Log.d(TAG, "支持 " + next.width + "x" + next.height);
+            Log.e(TAG, "PreviewSize支持 " + next.width + "x" + next.height);
             int n = Math.abs(next.height * next.width - mHeigth *mWidth);
             if (n < m) {
                 m = n;
@@ -72,7 +91,7 @@ public class CameraV1 {
         mHeigth =size.height;
         mWidth =size.width;
         parameters.setPreviewSize(mWidth,mHeigth);
-        Log.d(TAG, "预览分辨率 width:" + size.width + " height:" + size.height);
+        Log.e(TAG, "预览分辨率 width:" + size.width + " height:" + size.height);
     }
 
     private void setPreviewOrientation(Camera.Parameters parameters) {
@@ -105,30 +124,6 @@ public class CameraV1 {
     }
 
 
-    public static void setCameraDisplayOrientation(Activity activity,
-                                                   int cameraId, Camera camera) {
-        Camera.CameraInfo info =
-                new Camera.CameraInfo();
-        Camera.getCameraInfo(cameraId, info);
-        int rotation = activity.getWindowManager().getDefaultDisplay()
-                .getRotation();
-        int degrees = 0;
-        switch (rotation) {
-            case Surface.ROTATION_0: degrees = 0; break;
-            case Surface.ROTATION_90: degrees = 90; break;
-            case Surface.ROTATION_180: degrees = 180; break;
-            case Surface.ROTATION_270: degrees = 270; break;
-        }
-
-        int result;
-        if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-            result = (info.orientation + degrees) % 360;
-            result = (360 - result) % 360;  // compensate the mirror
-        } else {  // back-facing
-            result = (info.orientation - degrees + 360) % 360;
-        }
-        camera.setDisplayOrientation(result);
-    }
 
     public void startPreview() {
         if (mCamera != null) {
@@ -141,7 +136,7 @@ public class CameraV1 {
             mCamera.stopPreview();
         }
     }
-
+    //设置Camera surfaceTexture
     public void setPreviewTexture(SurfaceTexture surfaceTexture) {
         if (mCamera != null) {
             try {
@@ -157,5 +152,66 @@ public class CameraV1 {
             mCamera.release();
             mCamera = null;
         }
+    }
+
+    public void requestCameraFocus() {
+        if (mCamera != null) {
+            Log.e("sggllog", "requestCameraFocus");
+            mCamera.autoFocus(null);
+        }
+    }
+
+
+    public void takePhoto() {
+        if (mCamera == null || takePicture) {
+            return;
+        }
+        takePicture = true;
+        mCamera.takePicture(null, null, new Camera.PictureCallback() {
+            @Override
+            public void onPictureTaken(final byte[] data, Camera camera) {
+                camera.startPreview();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        File file = new File(rootPicPath,System.currentTimeMillis()+".png");
+                        try {
+                            // 获取当前旋转角度, 并旋转图片
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                            bitmap = rotateBitmapByDegree(bitmap, 90);
+                            BufferedOutputStream bos = new BufferedOutputStream(
+                                    new FileOutputStream(file));
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                            bos.flush();
+                            bos.close();
+                            bitmap.recycle();
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        takePicture =false;
+                    }
+                }).start();
+            }
+        });
+    }
+
+    // 旋转图片
+    public static Bitmap rotateBitmapByDegree(Bitmap bm, int degree) {
+        Bitmap returnBm = null;
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        try {
+            returnBm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(),bm.getHeight(), matrix, true);
+        } catch (OutOfMemoryError e) {
+        }
+        if (returnBm == null) {
+            returnBm = bm;
+        }
+        if (bm != returnBm) {
+            bm.recycle();
+        }
+        return returnBm;
     }
 }

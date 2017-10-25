@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <sen.com.openglstudyv2.view.CameraSGLSurfaceView
+        android:id="@+id/camera_glview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:layout_marginBottom="16dp"
+        android:background="@android:color/transparent">
+
+        <sen.com.openglstudyv2.view.CameraButtonView
+            android:id="@+id/takePicture"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_gravity="center"
+             />
+
+
+    </LinearLayout>
+
+
+</FrameLayout>

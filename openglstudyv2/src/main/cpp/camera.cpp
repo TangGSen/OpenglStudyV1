@@ -49,6 +49,8 @@ void Camera::init(float x,float y,float z) {
 //    vertexBuffer->setPosition(2,2.0f, -2.0f, 0.0f, 1.0f);
 //    vertexBuffer->setPosition(3,2.0f, 2.0f, 0.0f,1.0f);
 
+    //
+
 
     mShader = new SShader;
     mShader->init("Res/camera_model.vs", "Res/camera_model.fs");

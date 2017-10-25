@@ -8,6 +8,8 @@ import android.opengl.GLSurfaceView;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import sen.com.openglstudyv2.view.CameraSGLSurfaceView;
+
 /**
  * Author : 唐家森
  * Version: 1.0
@@ -21,6 +23,7 @@ public class SCameraRenderer implements GLSurfaceView.Renderer, SurfaceTexture.O
     private boolean bIsPreviewStarted;
     private CameraV1 mCamera;
     private SurfaceTexture mSurfaceTexture;
+    private boolean takePicture;
 
     public SCameraRenderer(CameraSGLSurfaceView cameraSGLSurfaceView) {
         mGLSurfaceView = cameraSGLSurfaceView;
@@ -66,6 +69,9 @@ public class SCameraRenderer implements GLSurfaceView.Renderer, SurfaceTexture.O
         mGLSurfaceView.requestRender();
 
     }
+
+
+
 
 
 }

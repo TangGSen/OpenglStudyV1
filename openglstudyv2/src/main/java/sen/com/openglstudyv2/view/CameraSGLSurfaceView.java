@@ -1,9 +1,12 @@
-package sen.com.openglstudyv2;
+package sen.com.openglstudyv2.view;
 
 import android.app.Activity;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
+
+import sen.com.openglstudyv2.CameraV1;
+import sen.com.openglstudyv2.SCameraRenderer;
 
 /**
  * Author : 唐家森
@@ -32,7 +35,8 @@ public class CameraSGLSurfaceView extends GLSurfaceView {
         setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
     }
 
-    public void deinit() {
 
-    }
+
+
+
 }
