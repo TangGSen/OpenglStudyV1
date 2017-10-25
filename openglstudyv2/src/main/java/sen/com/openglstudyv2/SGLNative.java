@@ -1,6 +1,7 @@
 package sen.com.openglstudyv2;
 
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
 
 /**
  * Author : 唐家森
@@ -25,6 +26,11 @@ public class SGLNative {
 
     public static native void onSurfaceChanged(int width, int height);
     public static native void onDrawFrame();
+
+    public Bitmap getBitmapForNative(){
+
+        return null;
+    }
 
 
 }

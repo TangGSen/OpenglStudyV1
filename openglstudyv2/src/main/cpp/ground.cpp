@@ -71,9 +71,9 @@ void DrawAnyS::initData() {
     float startTime = getTime();
     vertexBuffer = new VertexBuffer;
     vertexBuffer->setSize(1600);
-    for (int z= 0; z< 20; ++z) {
+    for (int z= 0; z< 10; ++z) {
         float zStart = 100.0f- z*10.0f;
-        for (int x = 0; x < 20; ++x) {
+        for (int x = 0; x < 10; ++x) {
             int offset =(x+z*20)*4;
             float xStart = x * 10.0f - 100.0f;
             vertexBuffer->setPosition(offset,xStart,-2.0f,zStart);
@@ -129,7 +129,7 @@ void DrawAnyS::draw(glm::mat4 &mViewMatrix,
                   glm::value_ptr(mProjectionMatrix));
 
     //绘制400个正方形格子
-    for (int i = 0; i < 400; i++) {
+    for (int i = 0; i < 20; i++) {
         glDrawArrays(GL_TRIANGLE_STRIP, i * 4, 4);
     }
     vertexBuffer->unBind();

@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "sen.com.openglstudyv2"
-        minSdkVersion 11
+        minSdkVersion 22
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -14,7 +14,12 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
-                cppFlags "-frtti -fexceptions -std=c++11"
+                cppFlags "-std=c++11 -fno-rtti -fno-exceptions"
+                arguments '-DANDROID_TOOLCHAIN=clang',
+                        '-DANDROID_PLATFORM=android-19',
+                        '-DANDROID_STL=gnustl_static',
+                        '-DANDROID_ARM_NEON=TRUE',
+                        '-DANDROID_CPP_FEATURES=exceptions rtti'
                 abiFilters 'armeabi'
             }
         }

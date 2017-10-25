@@ -158,7 +158,7 @@ void Model::initModel(const char *path) {
 void Model::drawModel(glm::mat4 &mViewMatrix, glm::mat4 &mProjectionMatrix, float x, float y,float z) {
     glEnable(GL_DEPTH_TEST);
     //由于光照需要摄像机的位置
-    mShader->setUiformVec4("U_CameraPos",x,y,z,1.0);
+//    mShader->setUiformVec4("U_CameraPos",x,y,z,1.0);
     vertexBuffer->bind();
     glm::mat4 it = glm::inverseTranspose(mModelMatrix);
     mShader->bind(glm::value_ptr(mModelMatrix), glm::value_ptr(mViewMatrix),

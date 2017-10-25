@@ -46,11 +46,14 @@ void SShader::bind(float *M, float *V, float *P) {
         glBindTexture(GL_TEXTURE_2D,iterators->second->mTexture);
         glUniform1i(iterators->second->mLocation,index++);
     }
-   /* 单个贴图做法
-    * if (uniformTexture.mLocation!=-1){
-        glBindTexture(GL_TEXTURE_2D,uniformTexture.mTexture);
-        glUniform1i(uniformTexture.mLocation,0);
-    }*/
+
+
+
+    /* 单个贴图做法
+     * if (uniformTexture.mLocation!=-1){
+         glBindTexture(GL_TEXTURE_2D,uniformTexture.mTexture);
+         glUniform1i(uniformTexture.mLocation,0);
+     }*/
 
     for (auto iterators = uniformVec4s.begin();iterators!=uniformVec4s.end();++iterators) {
         glUniform4fv(iterators->second->mLocation,1,iterators->second->data);
@@ -72,6 +75,12 @@ void SShader::bind(float *M, float *V, float *P) {
     glVertexAttribPointer(normalLocation, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex),
                           (const void *) (sizeof(float) * 12));
 
+}
+
+void SShader::setTextureEexternalOes(GLuint textureId){
+    glBindTexture(GL_TEXTURE_EXTERNAL_OES, textureId);
+    glActiveTexture(GL_TEXTURE0);
+    glUniform1i(texcoordLocation, 0);
 }
 
 //单个的做法设置贴图
@@ -152,6 +161,9 @@ void SShader::setTexture(char * name,GLuint texture){
     }
 
 }
+
+
+
 
 
 

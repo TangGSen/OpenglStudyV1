@@ -39,6 +39,9 @@ JNIEXPORT void JNICALL Java_sen_com_openglstudyv2_SGLNative_onSurfaceChanged
 JNIEXPORT void JNICALL Java_sen_com_openglstudyv2_SGLNative_onDrawFrame
   (JNIEnv *, jclass);
 
+
+
+
 #ifdef __cplusplus
 }
 #endif

@@ -8,8 +8,12 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/CameraFilter" />
+            <option value="$PROJECT_DIR$/CameraOpenglEs" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/camerav2" />
             <option value="$PROJECT_DIR$/openglstudyv2" />
+            <option value="$PROJECT_DIR$/testopengl" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

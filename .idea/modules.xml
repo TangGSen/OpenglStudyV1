@@ -2,9 +2,13 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/CameraFilter/CameraFilter.iml" filepath="$PROJECT_DIR$/CameraFilter/CameraFilter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CameraOpenglEs/CameraOpenglEs.iml" filepath="$PROJECT_DIR$/CameraOpenglEs/CameraOpenglEs.iml" />
       <module fileurl="file://$PROJECT_DIR$/OpenglStudyV1.iml" filepath="$PROJECT_DIR$/OpenglStudyV1.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/camerav2/camerav2.iml" filepath="$PROJECT_DIR$/camerav2/camerav2.iml" />
       <module fileurl="file://$PROJECT_DIR$/openglstudyv2/openglstudyv2.iml" filepath="$PROJECT_DIR$/openglstudyv2/openglstudyv2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/testopengl/testopengl.iml" filepath="$PROJECT_DIR$/testopengl/testopengl.iml" />
     </modules>
   </component>
 </project>

@@ -1,1 +1,1 @@
-include ':app', ':openglstudyv2'
+include ':app', ':openglstudyv2', ':camerav2', ':testopengl', ':CameraFilter', ':CameraOpenglEs'

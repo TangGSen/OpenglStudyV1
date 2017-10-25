@@ -6,13 +6,13 @@
 #include "scence.h"
 
 //c++ 11 的nullptr
-AAssetManager *aAssetManager = nullptr;
+AAssetManager *saAssetManager = nullptr;
 
-unsigned char *loadFile(const char *path, int &fileSize) {
+unsigned char *sloadFile(const char *path, int &fileSize) {
     unsigned char *file = nullptr;
     fileSize = 0;
     //android 读取内部资源的方法
-    AAsset *asset = AAssetManager_open(aAssetManager, path, AASSET_MODE_UNKNOWN);
+    AAsset *asset = AAssetManager_open(saAssetManager, path, AASSET_MODE_UNKNOWN);
     if (asset == nullptr)
         return nullptr;
     //读取成功
@@ -29,7 +29,7 @@ unsigned char *loadFile(const char *path, int &fileSize) {
 
 JNIEXPORT void JNICALL Java_sen_com_openglstudyv2_SGLNative_initAssetManager
         (JNIEnv *env, jclass clzss, jobject assetManager) {
-    aAssetManager = AAssetManager_fromJava(env, assetManager);
+    saAssetManager = AAssetManager_fromJava(env, assetManager);
 
 
 };

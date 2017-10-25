@@ -44,6 +44,7 @@ public:
     //设置UniformVec4
     void setUiformVec4(const char* name , float x,float y, float z,float w);
 
+    void setTextureEexternalOes(GLuint textureId);
 };
 
 

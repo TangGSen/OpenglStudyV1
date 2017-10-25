@@ -50,6 +50,7 @@ void main(){
     }else{
         color = ambientColor+diffuseColor*texture2D(U_Texture,V_textcoord.xy);
     }
-
-    gl_FragColor =color;
+    //增加一些滤镜效果
+     gl_FragColor =color;
+    gl_FragColor = vec4((1.0 - gl_FragColor.rgb), gl_FragColor.w);
 }
